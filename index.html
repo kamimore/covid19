@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Corona virus api</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery.js" charset="utf-8"></script>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </head>
+  <body class="bg-info">
+    
+    <table class='table table-striped'>
+
+       <thead>
+          <tr>
+        <td colsapn="2" class="bg-dark"><h2>Global Date</h2></td>
+      </tr>
+    </thead>
+      <tbody id="global-wise">
+
+      </tbody>
+    </table>
+    <br>
+    <div>
+      <h2>Countries Data</h2>
+    </div>
+    <div class="table table-responsive">
+      
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr class="bg-primary">
+          <th>S.No</th>
+          <th >Country</th>
+          <th >NewConfirmed</th>
+          <th>NewDeaths</th>
+          <th>NewRecovered</th>
+          <th>TotalConfirmed</th>
+          <th>TotalDeaths</th>
+          <th>TotalRecovered</th>
+        </tr>
+      </thead>
+
+      <tbody id="country-wise" class="">
+
+      </tbody>
+    </table>
+  </div>
+    <script type="text/javascript">
+
+      $.ajax({
+        url: "https://api.covid19api.com/summary",
+        typa:"GET",
+        datatype:"JSON",
+        success: function(data){
+          //console.log(data.Countries)
+          //console.log(data);
+          var d=new Date();
+          
+          $.each(data.Global,function(key,value){
+            //console.log(`${key} :${value}`);
+
+            $("#global-wise").append(`<tr><td>${key}</td><td class=${key}>${value}</td></tr>`);
+
+
+
+          });
+          $('.Date').text(d);
+          console.log(d);
+          $.each(data.Countries,function(key,value){
+            $("#country-wise").append(`<tr>
+                                        <td class="bg-success">${key+1}</td>
+                                          <td class="bg-danger">${value.Country}</td>
+                                            <td class="bg-secondary">${value.NewConfirmed}</td>
+                                              <td class="bg-warning">${value.NewDeaths}</td>
+                                                <td class="bg-info">${value.NewRecovered}</td>
+                                                  <td class="bg-success">${value.TotalConfirmed}</td>
+                                                    <td class="bg-success">${value.TotalDeaths}</td>
+                                                      <td class="bg-success">${value.TotalRecovered}</td>
+                                                        <tr>`)
+
+
+          })
+
+        
+
+        }
+
+
+      });
+
+    </script>
+
+  </body>
+</html>
